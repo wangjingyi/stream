@@ -132,4 +132,16 @@ class TestStream < Test::Unit::TestCase
     assert_equal(4, s.length)
     assert_equal(4, s.item(3))
   end
+  
+  def test_hard   
+    sieve = ->(recurse, s) do
+      h = s.head
+      l = ->{ recurse.call(recurse, s.tail.filter{|x| x % h != 0}) }     
+      Stream.new(h, l)
+    end
+    
+    ans = sieve.call(sieve, Stream.range(2)).take(10)
+    ten_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+    assert_equal(ten_primes, ans.list)
+  end
 end
