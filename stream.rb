@@ -76,6 +76,14 @@ class Stream
     end
   end
   
+  def member(elem)
+    empty? ? false : elem == head || tail.member(elem)
+  end
+  
+  def force
+    tail.force unless empty?
+  end
+  
   def filter(&f)
     if empty?
       Stream.new

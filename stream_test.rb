@@ -55,6 +55,17 @@ class TestStream < Test::Unit::TestCase
     assert_equal(8, stream2.item(3))
   end
   
+  def test_member
+    stream = Stream.make 1, 2, 3, 4
+    assert_equal(true, stream.member(3))
+    assert_equal(true, stream.member(4))
+    assert_equal(true, stream.member(1))
+    assert_equal(false, stream.member(5))
+    stream = Stream.make()
+    assert_equal(false, stream.member(3))
+    assert_equal(false, stream.member(1))
+  end
+  
   def test_filter
     stream = Stream.make 1, 2, 3, 4
     is_odd = ->(x) { x % 2 == 0}
